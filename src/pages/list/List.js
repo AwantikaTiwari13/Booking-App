@@ -1,7 +1,13 @@
+import Navbar from "../../components/Navbar/navbar"
+import Header from "../../components/Header/header"
+import "./list.css"
+
+
 const List = () => {
     return ( 
         <div> 
-            <h1>Hotels</h1>
+            <Navbar></Navbar>
+            <Header  type="list" ></Header>
         </div>
      );
 }
