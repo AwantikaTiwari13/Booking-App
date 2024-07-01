@@ -12,11 +12,13 @@ import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 // CSS files for the calendars UI design 
 
 import {useState} from 'react'
 const Header = ({type}) => {
     // HEADER STATES
+    const [destination, setDestination] = useState("");
     const [date, setDate] = useState([
         {
           startDate: new Date(),
@@ -31,6 +33,7 @@ const Header = ({type}) => {
         children: 0,
         room: 1,
       });
+      const navigate = useNavigate();
       const handleOption = (name, operation) => {
         setOptions((prev) => {
           return {
@@ -38,6 +41,9 @@ const Header = ({type}) => {
             [name]: operation === "i" ? options[name] + 1 : options[name] - 1,
           };
         });
+      };
+      const handleSearch = () => {
+        navigate("/hotels", { state: { destination, date, options } });
       };
     
       // format used for the date range library and this later is passed as a prop in the date range 
@@ -88,6 +94,7 @@ const Header = ({type}) => {
                   type="text"
                   placeholder="Where are you going?"
                   className="headerSearchInput"
+                  onChange={(e) => setDestination(e.target.value)}
                   
                 />
               </div>
@@ -186,7 +193,7 @@ const Header = ({type}) => {
                 )}
               </div>
               <div className="headerSearchItem">
-                <button className="headerBtn" >
+                <button className="headerBtn" onClick={handleSearch}>
                   Search
                 </button>
               </div>
