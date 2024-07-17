@@ -42,16 +42,31 @@ export const createHotel = async (req, res, next) => {
   };
   export const getHotels = async (req, res, next) => {
     const { min, max, ...others } = req.query;
-    try {
-      const hotels = await Hotel.find({
-        ...others,
-        cheapestPrice: { $gt: min | 1, $lt: max || 999 },
-      }).limit(req.query.limit);
+    // console.log(typeof(req.query));
+    const length = Object.keys(req.query).length;
+    // console.log(length);
+    if(length == 0){
+      // console.log(34);
+      const hotels = await Hotel.find() ;
       res.status(200).json(hotels);
-      console.log(hotels);
-    } catch (err) {
-      next(err);
-    } 
+      // console.log(hotels);
+    }else {
+      // console.log(45);
+      try {
+        const hotels = await Hotel.find({
+          ...others,
+          cheapestPrice: { $gt: min | 1, $lt: max || 999 },
+        }).limit(req.query.limit);
+        res.status(200).json(hotels);
+        // console.log(hotels);
+  
+      } catch (err) {
+        next(err);
+      } 
+
+    }
+    
+  
   };
   export const countByCity = async (req, res, next) => {
     const cities = req.query.cities.split(",");
@@ -89,9 +104,7 @@ export const createHotel = async (req, res, next) => {
   };
   export const getHotelRooms = async (req, res, next) => {
     try {
-      console.log(req.params.id);
       const hotel = await Hotel.findById(req.params.id);
-      console.log(hotel);
       const list = await Promise.all(
         hotel.rooms.map((room) => {
           return Room.findById(room);

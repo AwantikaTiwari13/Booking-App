@@ -84,9 +84,11 @@ const Reserve = ({ setOpen, hotelId }) => {
               </div>
               <div className="rPrice">{item.price}</div>
             </div>
+            {console.log(item.roomNumbers)}
             <div className="rSelectRooms">
               {item.roomNumbers.map((roomNumber) => (
                 <div className="room">
+                 {/* { console.log(roomNumber)} */}
                   <label>{roomNumber.number}</label>
                   <input
                     type="checkbox"

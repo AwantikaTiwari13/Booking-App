@@ -6,19 +6,21 @@ export const createRoom = async (req, res, next) => {
   const hotelId = req.params.hotelid;
   const newRoom = new Room(req.body);
   console.log("i got here");
-  try {
+  
     const savedRoom = await newRoom.save();
     try {
-      await Hotel.findByIdAndUpdate(hotelId, {
-        $push: { rooms: savedRoom._id },
-      });
+      const savedRoom = await newRoom.save();
+      try {
+        await Hotel.findByIdAndUpdate(hotelId, {
+          $push: { rooms: savedRoom._id },
+        });
+        res.status(200).json(savedRoom);
+      } catch (err) {
+        next(err); // Handle the error, but don't send a response here
+      }
     } catch (err) {
       next(err);
     }
-    res.status(200).json(savedRoom);
-  } catch (err) {
-    next(err);
-  }
 };
 
 export const updateRoom = async (req, res, next) => {
@@ -68,7 +70,7 @@ export const getRoom = async (req, res, next) => {
   console.log("iiiiiiii");
   try {
     const room = await Room.findById(req.params.id);
-    console.log(rooms);
+    console.log(room);
     res.status(200).json(room);
   } catch (err) {
     next(err);

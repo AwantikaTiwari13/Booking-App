@@ -11,7 +11,8 @@ const RoomSchema = new mongoose.Schema(
     },
     maxPeople: {
       type: Number,
-      required: true,
+      // required: true,
+      default: 4
     },
     desc: {
       type: String,

@@ -126,3 +126,7 @@
   .optionCounterButton:disabled {
     cursor: not-allowed;
   }
+  .link-text {
+    color: inherit; /* Inherit color from parent (or specify your desired color) */
+    text-decoration: none; /* Remove underline */
+  }

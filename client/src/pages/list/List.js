@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar/navbar";
 import Header from "../../components/Header/header";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
-import { format } from "date-fns";
+import { format, setDay } from "date-fns";
 import { DateRange, defaultStaticRanges } from "react-date-range";
 import SearchItem from "../../components/searchItem/searchItem";
 import useFetch from "../../hooks/useFetch";
@@ -18,9 +18,10 @@ const List = () => {
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
   const { data, loading, error, reFetch } = useFetch(
-     `/hotels?city=${destination}&min=${min || 0 }&max=${max || 1200}`
+     `/hotels?city=${destination}&min=${min || 0 }&max=${max || 9007199254740991 }`
   );
   const handleClick = () => {
+    alert (destination);
     reFetch();
   };
   console.log(data);
@@ -34,7 +35,7 @@ const List = () => {
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
               <label>Destination</label>
-              <input placeholder={destination} type="text" />
+              <input placeholder={destination} type="text" onChange={(e)=>{setDestination(e.target.value);}}/>
             </div>
             <div className="lsItem">
               <label>Check-in Date</label>
